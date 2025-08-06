@@ -56,7 +56,8 @@ jobs:
         chmod +x /usr/local/bin/cosign
 
     - name: Sign Docker image (with key)
+      env:
+        COSIGN_PASSWORD: ${{ secrets.COSIGN_PASSWORD }}
       run: |
         echo "${{ secrets.COSIGN_KEY }}" > cosign.key
         cosign sign --key cosign.key --yes sebasilc/secure-pipeline-demo:${{ github.sha }}
-
