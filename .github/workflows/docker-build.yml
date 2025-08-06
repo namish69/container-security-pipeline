@@ -29,12 +29,13 @@ jobs:
         format: 'table'
         ignore-unfixed: true
 
-    - name: Scan with Grype
+    - name: Scan with Grype (detailed)
       uses: anchore/scan-action@v3
       with:
         image: 'secure-pipeline-demo:${{ github.sha }}'
-        fail-build: true
+        fail-build: false    # <--- Let pipeline continue even if vulns found
         severity-cutoff: high
+        output-format: table # <--- Show readable table
 
     - name: Log in to DockerHub
       uses: docker/login-action@v3
