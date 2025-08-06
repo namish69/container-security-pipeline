@@ -46,17 +46,15 @@ jobs:
       run: |
         docker tag secure-pipeline-demo:${{ github.sha }} sebasilc/secure-pipeline-demo:${{ github.sha }}
         docker push sebasilc/secure-pipeline-demo:${{ github.sha }}
+        docker tag secure-pipeline-demo:${{ github.sha }} sebasilc/secure-pipeline-demo:latest
+        docker push sebasilc/secure-pipeline-demo:latest
 
     - name: Install Cosign
       run: |
         wget https://github.com/sigstore/cosign/releases/latest/download/cosign-linux-amd64 -O /usr/local/bin/cosign
         chmod +x /usr/local/bin/cosign
 
-    - name: Generate Cosign key pair
+    - name: Sign Docker image (keyless)
       run: |
-        cosign generate-key-pair --kms=""
-
-    - name: Sign Docker image
-      run: |
-        cosign sign --key cosign.key sebasilc/secure-pipeline-demo:${{ github.sha }}
-
+        cosign sign --yes sebasilc/secure-pipeline-demo:${{ github.sha }}
+        cosign sign --yes sebasilc/secure-pipeline-demo:latest
