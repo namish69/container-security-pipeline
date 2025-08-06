@@ -55,7 +55,8 @@ jobs:
         wget https://github.com/sigstore/cosign/releases/latest/download/cosign-linux-amd64 -O /usr/local/bin/cosign
         chmod +x /usr/local/bin/cosign
 
-    - name: Sign Docker image (keyless)
+       - name: Sign Docker image (with key)
       run: |
-        cosign sign --yes sebasilc/secure-pipeline-demo:${{ github.sha }}
-        cosign sign --yes sebasilc/secure-pipeline-demo:latest
+        echo "${{ secrets.COSIGN_KEY }}" > cosign.key
+        cosign sign --key cosign.key --yes sebasilc/secure-pipeline-demo:${{ github.sha }}
+
