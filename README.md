@@ -102,11 +102,7 @@ A full end-to-end secure container deployment pipeline that:
    - Created a NodePort service to expose the app.
    - Used browser/curl to confirm external access *(Screenshot: `app-portforward-success.png` & `app_and_dockerfile.png`)*
 
-### 7. Security Exception Documentation
-   - Documented and justified unfixable CVEs inherited from official Python images.
-   - Demonstrated understanding of supply chain risk in README.
-
-### 8. Cleanup 
+### 7. Cleanup 
    - Deleted all Kubernetes resources after testing.
    - Removed test Docker images from local and remote.
    - Audited and pruned sensitive files before finalizing repo *(Screenshot: `pods-healthy-after-livenessprobe.png` & `readiness-probe-added.png`)*
@@ -129,17 +125,15 @@ A full end-to-end secure container deployment pipeline that:
 | 5    | k8s-deployment-security-livenessprobe.png | Secure deployment YAML (livenessProbe/securityContext) |
 | 5    | kubectl-describe-pod-livenessProbe.png    | Pod description with liveness/readiness info           |
 | 6    | app-portforward-success.png               | App accessed via browser/curl on NodePort              |
-| 8    | pods-healthy-after-livenessprobe.png      | All pods healthy after probe configuration             |
-| 8    | readiness-probe-added.png                 | Readiness and liveness probes added to manifest        |
+| 7    | pods-healthy-after-livenessprobe.png      | All pods healthy after probe configuration             |
+| 7    | readiness-probe-added.png                 | Readiness and liveness probes added to manifest        |
 
 ---
 
 ## Security Notes and Exceptions
 
-**- Documented Vulnerabilities:** Some vulnerabilities (mainly in system libraries or base images) are unfixable, flagged as "won't fix" in Grype/Trivy reports and come directly from the official Python base image. These are documented as security exceptions in the README, as recommended for portfolio labs.
-
+**- Documented Vulnerabilities:** Some vulnerabilities (mainly in system libraries or base images) are unfixable, flagged as "won't fix" in Grype/Trivy reports and come directly from the official Python base image. 
 **- Risk Understanding:** All app dependencies are locked and up to date. Risks are documented and mitigations noted in each step.
-
 **- securityContext Section:** Kubernetes manifests use strict securityContext (non-root, no privilege escalation, read-only root filesystem)
 
 ---
